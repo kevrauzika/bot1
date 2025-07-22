@@ -1,0 +1,69 @@
+# Nome do Workflow
+name: Build and deploy .NET Core app to Azure Web App - chatbot-suporte-kevin-app
+
+# Gatilho (trigger): Este workflow roda sempre que houver um push no branch 'main'
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Permissões para o Job
+permissions:
+  contents: read
+
+# Jobs que serão executados
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      # 1. Faz o checkout do seu código do repositório
+      - uses: actions/checkout@v4
+
+      # 2. Configura o ambiente .NET com a versão correta (net8.0)
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      # 3. Executa o build do projeto dentro da pasta correta
+      - name: Build with dotnet
+        run: dotnet build ./02.echo-bot --configuration Release
+
+      # 4. Publica o projeto, preparando os arquivos para o deploy
+      - name: dotnet publish
+        run: dotnet publish ./02.echo-bot -c Release -o ${{env.DOTNET_ROOT}}/myapp
+
+      # 5. Faz o upload dos arquivos publicados como um "artefato"
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/myapp
+
+  deploy:
+    permissions:
+      contents: none
+    runs-on: windows-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      # 1. Baixa o artefato que foi gerado no job de "build"
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: .net-app
+
+      # 2. Faz o deploy para o seu Azure Web App
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'chatbot-suporte-kevin-app' # <--- CONFIRME SE ESTE É O NOME DO SEU APP NO AZURE
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_... }} # <--- DEIXE ESTA LINHA COMO ESTÁ, O AZURE/GITHUB CUIDA DISSO
+          package: .
