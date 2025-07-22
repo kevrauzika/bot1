@@ -23,13 +23,11 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      # CORRIGIDO: Adicionado o caminho para a pasta do projeto
       - name: Build with dotnet
-        run: dotnet build ./02.echo-bot --configuration Release
+        run: dotnet build --configuration Release
 
-      # CORRIGIDO: Adicionado o caminho para a pasta do projeto
       - name: dotnet publish
-        run: dotnet publish ./02.echo-bot -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -64,3 +62,4 @@ jobs:
           app-name: 'chatbot-suporte-kevin-app'
           slot-name: 'Production'
           package: .
+          
