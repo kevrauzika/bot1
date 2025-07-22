@@ -23,9 +23,10 @@ namespace Microsoft.BotBuilderSamples
         {
             services.AddHttpClient().AddControllers().AddNewtonsoftJson();
             services.AddSingleton<IBotFrameworkHttpAdapter, AdapterWithErrorHandler>();
-
-            // Registrando nossos serviços
             services.AddSingleton<RAGService>();
+            services.AddSingleton<IStorage, MemoryStorage>();
+            services.AddSingleton<ConversationState>();
+            services.AddSingleton<UserState>();
             services.AddTransient<IBot, EchoBot>();
         }
 
