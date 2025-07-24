@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.BotBuilderSamples.Bots;
+using Microsoft.BotBuilderSamples.Services;
 
 namespace Microsoft.BotBuilderSamples
 {
@@ -22,11 +23,18 @@ namespace Microsoft.BotBuilderSamples
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient().AddControllers().AddNewtonsoftJson();
+
+            // Bot Framework
             services.AddSingleton<IBotFrameworkHttpAdapter, AdapterWithErrorHandler>();
-            services.AddSingleton<RAGService>();
             services.AddSingleton<IStorage, MemoryStorage>();
             services.AddSingleton<ConversationState>();
             services.AddSingleton<UserState>();
+
+            // MCP e RAG Services
+            services.AddSingleton<McpClient>();        // ← NOVA LINHA
+            services.AddSingleton<RAGService>();
+
+            // Bot
             services.AddTransient<IBot, EchoBot>();
         }
 

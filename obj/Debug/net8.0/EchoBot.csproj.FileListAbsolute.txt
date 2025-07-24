@@ -142,3 +142,5 @@ C:\tmb\bot1\02.echo-bot\obj\Debug\net8.0\EchoBot.pdb
 C:\tmb\bot1\02.echo-bot\obj\Debug\net8.0\EchoBot.genruntimeconfig.cache
 C:\tmb\bot1\02.echo-bot\obj\Debug\net8.0\ref\EchoBot.dll
 C:\tmb\bot1\02.echo-bot\obj\Debug\net8.0\EchoBot.sourcelink.json
+C:\tmb\bot1\02.echo-bot\bin\Debug\net8.0\mcp-server\config\settings.json
+C:\tmb\bot1\02.echo-bot\bin\Debug\net8.0\mcp-server\package.json
