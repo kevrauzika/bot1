@@ -4,3 +4,5 @@ azure-search-documents
 openai
 requests
 beautifulsoup4
+weasyprint
+reportlab
