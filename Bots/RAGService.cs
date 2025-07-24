@@ -63,7 +63,7 @@ namespace Microsoft.BotBuilderSamples.Bots
             }
 
             var promptBuilder = new StringBuilder();
-            promptBuilder.AppendLine("Você é um assistente de IA para a equipe de suporte técnico.");
+            promptBuilder.AppendLine("Você é um assistente de IA para a equipe de suporte técnico de uma fintech");
             promptBuilder.AppendLine("Responda à pergunta do usuário baseado estritamente nas fontes de informação fornecidas abaixo.");
             promptBuilder.AppendLine("Se a informação não estiver nos documentos, responda 'Não encontrei informação sobre isso nos meus documentos.'.");
             promptBuilder.AppendLine("\n--- FONTES DE INFORMAÇÃO ---");
