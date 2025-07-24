@@ -1,4 +1,4 @@
-using Azure.AI.OpenAI;
+﻿using Azure.AI.OpenAI;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 using Azure;
@@ -51,7 +51,7 @@ namespace Microsoft.BotBuilderSamples
         {
             if (string.IsNullOrWhiteSpace(question))
             {
-                return "Por favor, fa�a uma pergunta v�lida.";
+                return "Por favor, faça uma pergunta válida.";
             }
 
             try
@@ -62,14 +62,14 @@ namespace Microsoft.BotBuilderSamples
                 var questionEmbedding = await GenerateEmbeddingAsync(question);
                 if (questionEmbedding == null)
                 {
-                    return "N�o foi poss�vel processar sua pergunta no momento.";
+                    return "Não foi possível processar sua pergunta no momento.";
                 }
 
                 // Passo 2: Buscar documentos relevantes
                 var relevantDocs = await SearchRelevantDocumentsAsync(question, questionEmbedding);
                 if (!relevantDocs.Any())
                 {
-                    return "N�o encontrei informa��o relevante sobre sua pergunta em nossa base de conhecimento.";
+                    return "Não encontrei informação relevante sobre sua pergunta em nossa base de conhecimento.";
                 }
 
                 // Passo 3: Gerar resposta usando contexto
@@ -152,14 +152,56 @@ namespace Microsoft.BotBuilderSamples
 
                 if (string.IsNullOrWhiteSpace(context))
                 {
-                    return "N�o encontrei informa��o suficiente para responder sua pergunta.";
+                    return "Não encontrei informação suficiente para responder sua pergunta em nossa base de conhecimento. Por favor, reformule sua pergunta ou entre em contato com o suporte técnico.";
                 }
 
                 var chatDeployment = _configuration["AzureOpenAi:ChatDeploymentName"];
 
-                var systemPrompt = @"Voc� � um assistente de suporte t�cnico. 
-Use apenas as informa��es do contexto fornecido para responder.
-Contexto: " + context;
+                var systemPrompt = @"Você é um ASSISTENTE DE SUPORTE TÉCNICO especializado e altamente qualificado. Sua função é fornecer suporte técnico preciso e profissional.
+
+## REGRAS FUNDAMENTAIS:
+1. 🔍 Use APENAS as informações da base de conhecimento fornecida
+2. 📋 Se não tiver a informação, diga claramente que não possui essa informação específica
+3. 🎯 Seja preciso, claro e direto nas respostas
+4. 💼 Mantenha um tom profissional, mas amigável
+5. ⚡ Priorize soluções práticas e acionáveis
+
+## ESTRUTURA DE RESPOSTA:
+Para PROBLEMAS TÉCNICOS:
+- ✅ Confirmação do problema
+- 🔧 Passos de solução numerados
+- ⚠️ Alertas ou cuidados importantes
+- 📞 Quando escalar para suporte humano
+
+Para PROCESSOS/PROCEDIMENTOS:
+- 📝 Objetivo do processo
+- 📋 Pré-requisitos (se houver)
+- 🔢 Passos detalhados numerados
+- ✅ Como validar se foi executado corretamente
+
+Para INFORMAÇÕES GERAIS:
+- 📖 Explicação clara e objetiva
+- 🔗 Relacionamentos com outros sistemas/processos
+- 💡 Dicas adicionais úteis
+
+## ESTILO DE COMUNICAÇÃO:
+- Use emojis moderadamente para melhor legibilidade
+- Evite jargões técnicos desnecessários
+- Numere passos quando for um procedimento
+- Destaque informações importantes com **negrito**
+- Use listas quando apropriado
+
+## ESCALAÇÃO:
+Se a situação requer atenção humana, indique:
+'⚠️ **ATENÇÃO**: Esta situação requer análise do suporte técnico especializado. Por favor, abra um ticket ou entre em contato conosco.'
+
+## BASE DE CONHECIMENTO DISPONÍVEL:
+" + context + @"
+
+## IMPORTANTE:
+- Nunca invente informações que não estão na base de conhecimento
+- Se precisar de mais detalhes que não estão disponíveis, peça para o usuário ser mais específico
+- Sempre termine com uma pergunta de acompanhamento se apropriado";
 
                 var chatOptions = new ChatCompletionsOptions()
                 {
@@ -169,19 +211,24 @@ Contexto: " + context;
                 new ChatRequestSystemMessage(systemPrompt),
                 new ChatRequestUserMessage(question)
             },
-                    MaxTokens = 500,
-                    Temperature = 0.3f
+                    MaxTokens = 800, // Aumentado para respostas mais detalhadas
+                    Temperature = 0.2f // Bem baixa para consistência
                 };
 
                 var response = await _openAiClient.GetChatCompletionsAsync(chatOptions);
                 var answer = response.Value.Choices[0].Message.Content;
+
+                // Log das fontes utilizadas para rastreabilidade
+                var sources = relevantDocs.Select(doc => doc.ContainsKey("source") ? doc["source"].ToString() : "Unknown").Distinct();
+                _logger.LogInformation("Resposta gerada usando {DocumentCount} documentos. Sources: {Sources}",
+                    relevantDocs.Count, string.Join(", ", sources));
 
                 return answer;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erro ao gerar resposta");
-                return "Desculpe, n�o consegui gerar uma resposta adequada no momento.";
+                return "🔧 **Ops!** Estou com dificuldades técnicas no momento. Por favor, tente novamente em alguns instantes ou entre em contato com nosso suporte técnico.";
             }
         }
     }
