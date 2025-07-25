@@ -1,0 +1,147 @@
+[
+  {
+    "node_index": 0,
+    "structure": {
+      "object": "block",
+      "type": "paragraph",
+      "isVoid": false,
+      "data": {},
+      "nodes": [
+        {
+          "object": "text",
+          "leaves": [
+            "... (truncado)",
+            "... (truncado)",
+            "... (truncado)",
+            "... (truncado)",
+            "... (truncado)"
+          ],
+          "key": "d5e3bab77a8145e493e0e5533ce4fae8"
+        }
+      ],
+      "key": "7aad9c0d226a4f4981661299d31f14b7"
+    }
+  },
+  {
+    "node_index": 1,
+    "structure": {
+      "object": "block",
+      "type": "list-unordered",
+      "isVoid": false,
+      "data": {},
+      "nodes": [
+        {
+          "object": "block",
+          "type": "list-item",
+          "isVoid": false,
+          "data": {},
+          "nodes": [
+            "... (truncado)"
+          ],
+          "key": "7e8cd2c8e0a14d3abeb2e835eab29ba3"
+        },
+        {
+          "object": "block",
+          "type": "list-item",
+          "isVoid": false,
+          "data": {},
+          "nodes": [
+            "... (truncado)"
+          ],
+          "key": "4c817a7b71f64b3e94ce7fdbd3098ebd"
+        },
+        {
+          "object": "block",
+          "type": "list-item",
+          "isVoid": false,
+          "data": {},
+          "nodes": [
+            "... (truncado)"
+          ],
+          "key": "e38f0e0d11494bf79cdcf02617fbeb50"
+        }
+      ],
+      "key": "bff750d6411a48b0974a8189d9c928b9"
+    }
+  },
+  {
+    "node_index": 2,
+    "structure": {
+      "object": "block",
+      "type": "paragraph",
+      "isVoid": false,
+      "data": {},
+      "nodes": [
+        {
+          "object": "text",
+          "leaves": [
+            "... (truncado)"
+          ],
+          "key": "5235bea28de14464a733869711880206"
+        }
+      ],
+      "key": "b7f0b93409354b759fe5be93446e91f1"
+    }
+  },
+  {
+    "node_index": 3,
+    "structure": {
+      "object": "block",
+      "type": "list-unordered",
+      "isVoid": false,
+      "data": {},
+      "nodes": [
+        {
+          "object": "block",
+          "type": "list-item",
+          "isVoid": false,
+          "data": {},
+          "nodes": [
+            "... (truncado)"
+          ],
+          "key": "e18600b858b744c8a18886ed4aa3c84f"
+        },
+        {
+          "object": "block",
+          "type": "list-item",
+          "isVoid": false,
+          "data": {},
+          "nodes": [
+            "... (truncado)"
+          ],
+          "key": "3d157ccf1aca4c40aec3b7335f4e4e78"
+        },
+        {
+          "object": "block",
+          "type": "list-item",
+          "isVoid": false,
+          "data": {},
+          "nodes": [
+            "... (truncado)"
+          ],
+          "key": "2ff157eddae14d2e9356410d81ed69d8"
+        }
+      ],
+      "key": "3a54d6cf1b6e42b7bb7a277c90c53ccb"
+    }
+  },
+  {
+    "node_index": 4,
+    "structure": {
+      "object": "block",
+      "type": "paragraph",
+      "isVoid": false,
+      "data": {},
+      "nodes": [
+        {
+          "object": "text",
+          "leaves": [
+            "... (truncado)"
+          ],
+          "key": "69023586f6d14ca78731093fc7f6f644"
+        }
+      ],
+      "key": "9dc26dab536b4664bed9e863b2d88030"
+    }
+  }
+]

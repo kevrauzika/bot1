@@ -1,0 +1,777 @@
+{
+  "page_id": "fDd8JevP55A5uJxLIcak",
+  "successful_endpoints": {
+    "/spaces/lNWZwBFb2DiAy827Xuzc/content/page/fDd8JevP55A5uJxLIcak": {
+      "id": "fDd8JevP55A5uJxLIcak",
+      "title": "Bem vindo(a)",
+      "kind": "sheet",
+      "type": "document",
+      "urls": {
+        "app": "https://app.gitbook.com/s/lNWZwBFb2DiAy827Xuzc/bem-vindo-a"
+      },
+      "path": "bem-vindo-a",
+      "slug": "bem-vindo-a",
+      "documentId": "dnyY1EMKnWE78IzO6whj",
+      "createdAt": "2023-10-26T18:12:20.977Z",
+      "updatedAt": "2023-10-26T18:12:20.977Z",
+      "pages": [],
+      "layout": {
+        "cover": true,
+        "coverSize": "full",
+        "width": "default",
+        "title": true,
+        "description": true,
+        "tableOfContents": true,
+        "outline": true,
+        "pagination": true,
+        "metadata": true
+      },
+      "document": {
+        "object": "document",
+        "data": {
+          "schemaVersion": 8,
+          "documentId": "zh51m1HpXr84k8IJXrY0"
+        },
+        "nodes": [
+          {
+            "object": "block",
+            "type": "paragraph",
+            "isVoid": false,
+            "data": {},
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "object": "leaf",
+                    "text": "Somos a TMB EducaçãoA ",
+                    "marks": []
+                  },
+                  {
+                    "object": "leaf",
+                    "text": "TMB Educação",
+                    "marks": [
+                      {
+                        "object": "mark",
+                        "type": "bold",
+                        "data": {}
+                      }
+                    ]
+                  },
+                  {
+                    "object": "leaf",
+                    "text": " é uma fintech brasileira que oferece soluções financeiras e de marketing para infoprodutores, ou seja, criadores de conteúdo digital educativo. A empresa foi fundada em 2022 e tem como objetivo democratizar o acesso à educação, oferecendo financiamento e apoio para que infoprodutores possam lançar seus cursos e produtos com mais sucesso.As principais soluções oferecidas pela ",
+                    "marks": []
+                  },
+                  {
+                    "object": "leaf",
+                    "text": "TMB Educação",
+                    "marks": [
+                      {
+                        "object": "mark",
+                        "type": "bold",
+                        "data": {}
+                      }
+                    ]
+                  },
+                  {
+                    "object": "leaf",
+                    "text": " são:",
+                    "marks": []
+                  }
+                ],
+                "key": "d5e3bab77a8145e493e0e5533ce4fae8"
+              }
+            ],
+            "key": "7aad9c0d226a4f4981661299d31f14b7"
+          },
+          {
+            "object": "block",
+            "type": "list-unordered",
+            "isVoid": false,
+            "data": {},
+            "nodes": [
+              {
+                "object": "block",
+                "type": "list-item",
+                "isVoid": false,
+                "data": {},
+                "nodes": [
+                  {
+                    "object": "block",
+                    "type": "paragraph",
+                    "isVoid": false,
+                    "data": {},
+                    "nodes": [
+                      {
+                        "object": "text",
+                        "leaves": [
+                          {
+                            "object": "leaf",
+                            "text": "Financiamento para lançamentos:",
+                            "marks": [
+                              {
+                                "object": "mark",
+                                "type": "bold",
+                                "data": {}
+                              }
+                            ]
+                          },
+                          {
+                            "object": "leaf",
+                            "text": " a empresa oferece empréstimos para infoprodutores que precisam de capital para investir em seus lançamentos. Os empréstimos podem ser utilizados para pagar por marketing, produção de conteúdo, ou outros custos relacionados ao lançamento.",
+                            "marks": []
+                          }
+                        ],
+                        "key": "9d7fb586e0cf44dead6d5068aa63d875"
+                      }
+                    ],
+                    "key": "f83631039db04e8d86c19818e5c0263d"
+                  }
+                ],
+                "key": "7e8cd2c8e0a14d3abeb2e835eab29ba3"
+              },
+              {
+                "object": "block",
+                "type": "list-item",
+                "isVoid": false,
+                "data": {},
+                "nodes": [
+                  {
+                    "object": "block",
+                    "type": "paragraph",
+                    "isVoid": false,
+                    "data": {},
+                    "nodes": [
+                      {
+                        "object": "text",
+                        "leaves": [
+                          {
+                            "object": "leaf",
+                            "text": "Recuperação de vendas:",
+                            "marks": [
+                              {
+                                "object": "mark",
+                                "type": "bold",
+                                "data": {}
+                              }
+                            ]
+                          },
+                          {
+                            "object": "leaf",
+                            "text": " a empresa oferece um serviço de recuperação de vendas que ajuda os infoprodutores a recuperar pagamentos atrasados.",
+                            "marks": []
+                          }
+                        ],
+                        "key": "ecbbf709eed6403cbf4fdb21480d346f"
+                      }
+                    ],
+                    "key": "c1bd68388bdb47c3a8e299aa4676c32b"
+                  }
+                ],
+                "key": "4c817a7b71f64b3e94ce7fdbd3098ebd"
+              },
+              {
+                "object": "block",
+                "type": "list-item",
+                "isVoid": false,
+                "data": {},
+                "nodes": [
+                  {
+                    "object": "block",
+                    "type": "paragraph",
+                    "isVoid": false,
+                    "data": {},
+                    "nodes": [
+                      {
+                        "object": "text",
+                        "leaves": [
+                          {
+                            "object": "leaf",
+                            "text": "Marketing:",
+                            "marks": [
+                              {
+                                "object": "mark",
+                                "type": "bold",
+                                "data": {}
+                              }
+                            ]
+                          },
+                          {
+                            "object": "leaf",
+                            "text": " a empresa oferece um serviço de marketing para infoprodutores que precisam de ajuda para criar e executar campanhas de marketing para seus lançamentos.",
+                            "marks": []
+                          }
+                        ],
+                        "key": "50a1e29e9bbb400691913274302ac1a2"
+                      }
+                    ],
+                    "key": "7e4a27754709400596217b4e2e42f964"
+                  }
+                ],
+                "key": "e38f0e0d11494bf79cdcf02617fbeb50"
+              }
+            ],
+            "key": "bff750d6411a48b0974a8189d9c928b9"
+          },
+          {
+            "object": "block",
+            "type": "paragraph",
+            "isVoid": false,
+            "data": {},
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "object": "leaf",
+                    "text": "A TMB Educação é uma empresa que tem o potencial de revolucionar o mercado da educação digital. Ao oferecer soluções financeiras e de marketing para infoprodutores, a empresa está ajudando a democratizar o acesso à educação e a tornar mais fácil para as pessoas aprenderem novas habilidades e conhecimento.Aqui estão alguns dos benefícios que a TMB Educação oferece para infoprodutores:",
+                    "marks": []
+                  }
+                ],
+                "key": "5235bea28de14464a733869711880206"
+              }
+            ],
+            "key": "b7f0b93409354b759fe5be93446e91f1"
+          },
+          {
+            "object": "block",
+            "type": "list-unordered",
+            "isVoid": false,
+            "data": {},
+            "nodes": [
+              {
+                "object": "block",
+                "type": "list-item",
+                "isVoid": false,
+                "data": {},
+                "nodes": [
+                  {
+                    "object": "block",
+                    "type": "paragraph",
+                    "isVoid": false,
+                    "data": {},
+                    "nodes": [
+                      {
+                        "object": "text",
+                        "leaves": [
+                          {
+                            "object": "leaf",
+                            "text": "Aumento do faturamento:",
+                            "marks": [
+                              {
+                                "object": "mark",
+                                "type": "bold",
+                                "data": {}
+                              }
+                            ]
+                          },
+                          {
+                            "object": "leaf",
+                            "text": " a empresa estima que seus clientes podem aumentar seu faturamento em até 30% com o uso de suas soluções.",
+                            "marks": []
+                          }
+                        ],
+                        "key": "a70f54ad69154978b7518a19ec4c4110"
+                      }
+                    ],
+                    "key": "36530280f7de49d4a35dc8025bf5c611"
+                  }
+                ],
+                "key": "e18600b858b744c8a18886ed4aa3c84f"
+              },
+              {
+                "object": "block",
+                "type": "list-item",
+                "isVoid": false,
+                "data": {},
+                "nodes": [
+                  {
+                    "object": "block",
+                    "type": "paragraph",
+                    "isVoid": false,
+                    "data": {},
+                    "nodes": [
+                      {
+                        "object": "text",
+                        "leaves": [
+                          {
+                            "object": "leaf",
+                            "text": "Redução de custos:",
+                            "marks": [
+                              {
+                                "object": "mark",
+                                "type": "bold",
+                                "data": {}
+                              }
+                            ]
+                          },
+                          {
+                            "object": "leaf",
+                            "text": " a empresa oferece empréstimos com juros competitivos, o que pode ajudar os infoprodutores a reduzir seus custos de lançamento.",
+                            "marks": []
+                          }
+                        ],
+                        "key": "bdffb592e1dd418e949f8b4dfdb84603"
+                      }
+                    ],
+                    "key": "10161c438d844f76b5b773b4a104b51c"
+                  }
+                ],
+                "key": "3d157ccf1aca4c40aec3b7335f4e4e78"
+              },
+              {
+                "object": "block",
+                "type": "list-item",
+                "isVoid": false,
+                "data": {},
+                "nodes": [
+                  {
+                    "object": "block",
+                    "type": "paragraph",
+                    "isVoid": false,
+                    "data": {},
+                    "nodes": [
+                      {
+                        "object": "text",
+                        "leaves": [
+                          {
+                            "object": "leaf",
+                            "text": "Aumentar as chances de sucesso:",
+                            "marks": [
+                              {
+                                "object": "mark",
+                                "type": "bold",
+                                "data": {}
+                              }
+                            ]
+                          },
+                          {
+                            "object": "leaf",
+                            "text": " a empresa oferece um serviço de marketing e recuperação de vendas que pode ajudar os infoprodutores a aumentar suas chances de sucesso em seus lançamentos.",
+                            "marks": []
+                          }
+                        ],
+                        "key": "b93cdb47823c4a69b900ead1b0860f83"
+                      }
+                    ],
+                    "key": "3f527864eca741619f4a3dbba8566bbd"
+                  }
+                ],
+                "key": "2ff157eddae14d2e9356410d81ed69d8"
+              }
+            ],
+            "key": "3a54d6cf1b6e42b7bb7a277c90c53ccb"
+          },
+          {
+            "object": "block",
+            "type": "paragraph",
+            "isVoid": false,
+            "data": {},
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "object": "leaf",
+                    "text": "A TMB Educação é uma empresa que está crescendo rapidamente. No ano de 2023, a empresa já financiou mais de R$ 10 milhões em lançamentos de infoprodutos.",
+                    "marks": []
+                  }
+                ],
+                "key": "69023586f6d14ca78731093fc7f6f644"
+              }
+            ],
+            "key": "9dc26dab536b4664bed9e863b2d88030"
+          }
+        ],
+        "key": "0f5b52f101cd42ca8e777a0d8ae6edf8"
+      }
+    },
+    "/spaces/lNWZwBFb2DiAy827Xuzc/content/path/bem-vindo-a": {
+      "id": "fDd8JevP55A5uJxLIcak",
+      "title": "Bem vindo(a)",
+      "kind": "sheet",
+      "type": "document",
+      "urls": {
+        "app": "https://app.gitbook.com/s/lNWZwBFb2DiAy827Xuzc/bem-vindo-a"
+      },
+      "path": "bem-vindo-a",
+      "slug": "bem-vindo-a",
+      "documentId": "dnyY1EMKnWE78IzO6whj",
+      "createdAt": "2023-10-26T18:12:20.977Z",
+      "updatedAt": "2023-10-26T18:12:20.977Z",
+      "pages": [],
+      "layout": {
+        "cover": true,
+        "coverSize": "full",
+        "width": "default",
+        "title": true,
+        "description": true,
+        "tableOfContents": true,
+        "outline": true,
+        "pagination": true,
+        "metadata": true
+      },
+      "document": {
+        "object": "document",
+        "data": {
+          "schemaVersion": 8,
+          "documentId": "zh51m1HpXr84k8IJXrY0"
+        },
+        "nodes": [
+          {
+            "object": "block",
+            "type": "paragraph",
+            "isVoid": false,
+            "data": {},
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "object": "leaf",
+                    "text": "Somos a TMB EducaçãoA ",
+                    "marks": []
+                  },
+                  {
+                    "object": "leaf",
+                    "text": "TMB Educação",
+                    "marks": [
+                      {
+                        "object": "mark",
+                        "type": "bold",
+                        "data": {}
+                      }
+                    ]
+                  },
+                  {
+                    "object": "leaf",
+                    "text": " é uma fintech brasileira que oferece soluções financeiras e de marketing para infoprodutores, ou seja, criadores de conteúdo digital educativo. A empresa foi fundada em 2022 e tem como objetivo democratizar o acesso à educação, oferecendo financiamento e apoio para que infoprodutores possam lançar seus cursos e produtos com mais sucesso.As principais soluções oferecidas pela ",
+                    "marks": []
+                  },
+                  {
+                    "object": "leaf",
+                    "text": "TMB Educação",
+                    "marks": [
+                      {
+                        "object": "mark",
+                        "type": "bold",
+                        "data": {}
+                      }
+                    ]
+                  },
+                  {
+                    "object": "leaf",
+                    "text": " são:",
+                    "marks": []
+                  }
+                ],
+                "key": "d5e3bab77a8145e493e0e5533ce4fae8"
+              }
+            ],
+            "key": "7aad9c0d226a4f4981661299d31f14b7"
+          },
+          {
+            "object": "block",
+            "type": "list-unordered",
+            "isVoid": false,
+            "data": {},
+            "nodes": [
+              {
+                "object": "block",
+                "type": "list-item",
+                "isVoid": false,
+                "data": {},
+                "nodes": [
+                  {
+                    "object": "block",
+                    "type": "paragraph",
+                    "isVoid": false,
+                    "data": {},
+                    "nodes": [
+                      {
+                        "object": "text",
+                        "leaves": [
+                          {
+                            "object": "leaf",
+                            "text": "Financiamento para lançamentos:",
+                            "marks": [
+                              {
+                                "object": "mark",
+                                "type": "bold",
+                                "data": {}
+                              }
+                            ]
+                          },
+                          {
+                            "object": "leaf",
+                            "text": " a empresa oferece empréstimos para infoprodutores que precisam de capital para investir em seus lançamentos. Os empréstimos podem ser utilizados para pagar por marketing, produção de conteúdo, ou outros custos relacionados ao lançamento.",
+                            "marks": []
+                          }
+                        ],
+                        "key": "9d7fb586e0cf44dead6d5068aa63d875"
+                      }
+                    ],
+                    "key": "f83631039db04e8d86c19818e5c0263d"
+                  }
+                ],
+                "key": "7e8cd2c8e0a14d3abeb2e835eab29ba3"
+              },
+              {
+                "object": "block",
+                "type": "list-item",
+                "isVoid": false,
+                "data": {},
+                "nodes": [
+                  {
+                    "object": "block",
+                    "type": "paragraph",
+                    "isVoid": false,
+                    "data": {},
+                    "nodes": [
+                      {
+                        "object": "text",
+                        "leaves": [
+                          {
+                            "object": "leaf",
+                            "text": "Recuperação de vendas:",
+                            "marks": [
+                              {
+                                "object": "mark",
+                                "type": "bold",
+                                "data": {}
+                              }
+                            ]
+                          },
+                          {
+                            "object": "leaf",
+                            "text": " a empresa oferece um serviço de recuperação de vendas que ajuda os infoprodutores a recuperar pagamentos atrasados.",
+                            "marks": []
+                          }
+                        ],
+                        "key": "ecbbf709eed6403cbf4fdb21480d346f"
+                      }
+                    ],
+                    "key": "c1bd68388bdb47c3a8e299aa4676c32b"
+                  }
+                ],
+                "key": "4c817a7b71f64b3e94ce7fdbd3098ebd"
+              },
+              {
+                "object": "block",
+                "type": "list-item",
+                "isVoid": false,
+                "data": {},
+                "nodes": [
+                  {
+                    "object": "block",
+                    "type": "paragraph",
+                    "isVoid": false,
+                    "data": {},
+                    "nodes": [
+                      {
+                        "object": "text",
+                        "leaves": [
+                          {
+                            "object": "leaf",
+                            "text": "Marketing:",
+                            "marks": [
+                              {
+                                "object": "mark",
+                                "type": "bold",
+                                "data": {}
+                              }
+                            ]
+                          },
+                          {
+                            "object": "leaf",
+                            "text": " a empresa oferece um serviço de marketing para infoprodutores que precisam de ajuda para criar e executar campanhas de marketing para seus lançamentos.",
+                            "marks": []
+                          }
+                        ],
+                        "key": "50a1e29e9bbb400691913274302ac1a2"
+                      }
+                    ],
+                    "key": "7e4a27754709400596217b4e2e42f964"
+                  }
+                ],
+                "key": "e38f0e0d11494bf79cdcf02617fbeb50"
+              }
+            ],
+            "key": "bff750d6411a48b0974a8189d9c928b9"
+          },
+          {
+            "object": "block",
+            "type": "paragraph",
+            "isVoid": false,
+            "data": {},
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "object": "leaf",
+                    "text": "A TMB Educação é uma empresa que tem o potencial de revolucionar o mercado da educação digital. Ao oferecer soluções financeiras e de marketing para infoprodutores, a empresa está ajudando a democratizar o acesso à educação e a tornar mais fácil para as pessoas aprenderem novas habilidades e conhecimento.Aqui estão alguns dos benefícios que a TMB Educação oferece para infoprodutores:",
+                    "marks": []
+                  }
+                ],
+                "key": "5235bea28de14464a733869711880206"
+              }
+            ],
+            "key": "b7f0b93409354b759fe5be93446e91f1"
+          },
+          {
+            "object": "block",
+            "type": "list-unordered",
+            "isVoid": false,
+            "data": {},
+            "nodes": [
+              {
+                "object": "block",
+                "type": "list-item",
+                "isVoid": false,
+                "data": {},
+                "nodes": [
+                  {
+                    "object": "block",
+                    "type": "paragraph",
+                    "isVoid": false,
+                    "data": {},
+                    "nodes": [
+                      {
+                        "object": "text",
+                        "leaves": [
+                          {
+                            "object": "leaf",
+                            "text": "Aumento do faturamento:",
+                            "marks": [
+                              {
+                                "object": "mark",
+                                "type": "bold",
+                                "data": {}
+                              }
+                            ]
+                          },
+                          {
+                            "object": "leaf",
+                            "text": " a empresa estima que seus clientes podem aumentar seu faturamento em até 30% com o uso de suas soluções.",
+                            "marks": []
+                          }
+                        ],
+                        "key": "a70f54ad69154978b7518a19ec4c4110"
+                      }
+                    ],
+                    "key": "36530280f7de49d4a35dc8025bf5c611"
+                  }
+                ],
+                "key": "e18600b858b744c8a18886ed4aa3c84f"
+              },
+              {
+                "object": "block",
+                "type": "list-item",
+                "isVoid": false,
+                "data": {},
+                "nodes": [
+                  {
+                    "object": "block",
+                    "type": "paragraph",
+                    "isVoid": false,
+                    "data": {},
+                    "nodes": [
+                      {
+                        "object": "text",
+                        "leaves": [
+                          {
+                            "object": "leaf",
+                            "text": "Redução de custos:",
+                            "marks": [
+                              {
+                                "object": "mark",
+                                "type": "bold",
+                                "data": {}
+                              }
+                            ]
+                          },
+                          {
+                            "object": "leaf",
+                            "text": " a empresa oferece empréstimos com juros competitivos, o que pode ajudar os infoprodutores a reduzir seus custos de lançamento.",
+                            "marks": []
+                          }
+                        ],
+                        "key": "bdffb592e1dd418e949f8b4dfdb84603"
+                      }
+                    ],
+                    "key": "10161c438d844f76b5b773b4a104b51c"
+                  }
+                ],
+                "key": "3d157ccf1aca4c40aec3b7335f4e4e78"
+              },
+              {
+                "object": "block",
+                "type": "list-item",
+                "isVoid": false,
+                "data": {},
+                "nodes": [
+                  {
+                    "object": "block",
+                    "type": "paragraph",
+                    "isVoid": false,
+                    "data": {},
+                    "nodes": [
+                      {
+                        "object": "text",
+                        "leaves": [
+                          {
+                            "object": "leaf",
+                            "text": "Aumentar as chances de sucesso:",
+                            "marks": [
+                              {
+                                "object": "mark",
+                                "type": "bold",
+                                "data": {}
+                              }
+                            ]
+                          },
+                          {
+                            "object": "leaf",
+                            "text": " a empresa oferece um serviço de marketing e recuperação de vendas que pode ajudar os infoprodutores a aumentar suas chances de sucesso em seus lançamentos.",
+                            "marks": []
+                          }
+                        ],
+                        "key": "b93cdb47823c4a69b900ead1b0860f83"
+                      }
+                    ],
+                    "key": "3f527864eca741619f4a3dbba8566bbd"
+                  }
+                ],
+                "key": "2ff157eddae14d2e9356410d81ed69d8"
+              }
+            ],
+            "key": "3a54d6cf1b6e42b7bb7a277c90c53ccb"
+          },
+          {
+            "object": "block",
+            "type": "paragraph",
+            "isVoid": false,
+            "data": {},
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "object": "leaf",
+                    "text": "A TMB Educação é uma empresa que está crescendo rapidamente. No ano de 2023, a empresa já financiou mais de R$ 10 milhões em lançamentos de infoprodutos.",
+                    "marks": []
+                  }
+                ],
+                "key": "69023586f6d14ca78731093fc7f6f644"
+              }
+            ],
+            "key": "9dc26dab536b4664bed9e863b2d88030"
+          }
+        ],
+        "key": "0f5b52f101cd42ca8e777a0d8ae6edf8"
+      }
+    }
+  }
+}
