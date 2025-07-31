@@ -1,8 +1,0 @@
-python-dotenv
-azure-core
-azure-search-documents
-openai
-requests
-beautifulsoup4
-weasyprint
-reportlab
