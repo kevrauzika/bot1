@@ -206,7 +206,7 @@ Se a situação requer atenção humana, indique:
                         new ChatRequestUserMessage(question)
                     },
                     MaxTokens = 1200,
-                    Temperature = 0.1f
+                    Temperature = 1f
                 };
 
                 var response = await _openAiClient.GetChatCompletionsAsync(chatOptions);
