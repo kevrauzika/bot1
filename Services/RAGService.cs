@@ -11,8 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Diagnostics; // Adicionado para o Stopwatch
-using Microsoft.Bot.Builder; // Adicionado para IBotTelemetryClient
+using System.Diagnostics;
+using Microsoft.Bot.Builder;
 
 namespace Microsoft.BotBuilderSamples
 {
@@ -22,14 +22,13 @@ namespace Microsoft.BotBuilderSamples
         private readonly SearchClient _searchClient;
         private readonly IConfiguration _configuration;
         private readonly ILogger<RAGService> _logger;
-        private readonly IBotTelemetryClient _telemetryClient; // Adicionado para telemetria
+        private readonly IBotTelemetryClient _telemetryClient;
 
-        // Injetando o IBotTelemetryClient para registrar os tempos
         public RAGService(IConfiguration configuration, ILogger<RAGService> logger, IBotTelemetryClient telemetryClient)
         {
             _configuration = configuration;
             _logger = logger;
-            _telemetryClient = telemetryClient; // Armazenando a referência
+            _telemetryClient = telemetryClient;
 
             try
             {
@@ -61,6 +60,7 @@ namespace Microsoft.BotBuilderSamples
                 stopwatch.Start();
                 var questionEmbedding = await GenerateEmbeddingAsync(question);
                 stopwatch.Stop();
+                _logger.LogInformation("TEMPO DE EXECUÇÃO: Gerar Embedding da Pergunta - {Duration} ms", stopwatch.ElapsedMilliseconds);
                 _telemetryClient.TrackEvent("RAG - Gerar Embedding", metrics: new Dictionary<string, double> { { "Duration", stopwatch.ElapsedMilliseconds } });
                 if (questionEmbedding == null) return "Não foi possível processar sua pergunta no momento.";
 
@@ -68,6 +68,7 @@ namespace Microsoft.BotBuilderSamples
                 stopwatch.Restart();
                 var relevantDocs = await SearchRelevantDocumentsAsync(question, questionEmbedding);
                 stopwatch.Stop();
+                _logger.LogInformation("TEMPO DE EXECUÇÃO: Buscar na Base de Conhecimento - {Duration} ms", stopwatch.ElapsedMilliseconds);
                 _telemetryClient.TrackEvent("RAG - Buscar Documentos", metrics: new Dictionary<string, double> { { "Duration", stopwatch.ElapsedMilliseconds } });
                 if (!relevantDocs.Any()) return "Não encontrei informação relevante sobre sua pergunta em nossa base de conhecimento.";
 
@@ -75,9 +76,9 @@ namespace Microsoft.BotBuilderSamples
                 stopwatch.Restart();
                 var answer = await GenerateAnswerAsync(question, relevantDocs);
                 stopwatch.Stop();
+                _logger.LogInformation("TEMPO DE EXECUÇÃO: Montar Resposta Final (OpenAI) - {Duration} ms", stopwatch.ElapsedMilliseconds);
                 _telemetryClient.TrackEvent("RAG - Gerar Resposta Final", metrics: new Dictionary<string, double> { { "Duration", stopwatch.ElapsedMilliseconds } });
 
-                _logger.LogInformation("Resposta gerada com sucesso para: {Question}", question);
                 return answer;
             }
             catch (Exception ex)
@@ -92,11 +93,8 @@ namespace Microsoft.BotBuilderSamples
             try
             {
                 var embeddingDeployment = _configuration["AzureOpenAi:EmbeddingDeploymentName"];
-                _logger.LogDebug("Gerando embedding usando deployment: {Deployment}", embeddingDeployment);
-
                 var embeddingResponse = await _openAiClient.GetEmbeddingsAsync(
                     new EmbeddingsOptions(embeddingDeployment, new[] { text }));
-
                 return embeddingResponse.Value.Data[0].Embedding.ToArray();
             }
             catch (Exception ex)
@@ -115,7 +113,6 @@ namespace Microsoft.BotBuilderSamples
                     Size = 3,
                     Select = { "content", "source" }
                 };
-
                 searchOptions.VectorSearch = new()
                 {
                     Queries = {
@@ -126,16 +123,12 @@ namespace Microsoft.BotBuilderSamples
                         }
                     }
                 };
-
-                _logger.LogDebug("Executando busca vetorial para: {Question}", question);
                 var searchResults = await _searchClient.SearchAsync<SearchDocument>(question, searchOptions);
-
                 var documents = new List<SearchDocument>();
                 await foreach (var result in searchResults.Value.GetResultsAsync())
                 {
                     documents.Add(result.Document);
                 }
-
                 return documents;
             }
             catch (Exception ex)
@@ -218,7 +211,7 @@ Se a situação requer atenção humana, indique:
 
                 var response = await _openAiClient.GetChatCompletionsAsync(chatOptions);
                 var answer = response.Value.Choices[0].Message.Content;
-                
+
                 var sources = relevantDocs.Select(doc => doc.ContainsKey("source") ? doc["source"].ToString() : "Unknown").Distinct();
                 _logger.LogInformation("Resposta gerada usando {DocumentCount} documentos. Sources: {Sources}",
                     relevantDocs.Count, string.Join(", ", sources));
