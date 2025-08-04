@@ -12,6 +12,8 @@ using Microsoft.BotBuilderSamples.Dialogs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging; // Adicione esta linha
+using Microsoft.BotBuilderSamples.Services; // Adicione esta linha se RAGService estiver em Services
 
 namespace Microsoft.BotBuilderSamples
 {
@@ -40,6 +42,8 @@ namespace Microsoft.BotBuilderSamples
             services.AddSingleton<IStorage, MemoryStorage>();
             services.AddSingleton<ConversationState>();
             services.AddSingleton<UserState>();
+
+            // Registra o RAGService de forma simples. O sistema irá injetar as dependências automaticamente.
             services.AddSingleton<RAGService>();
 
             // Registra os diálogos que você criou

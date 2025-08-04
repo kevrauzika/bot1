@@ -1,4 +1,7 @@
-﻿using Azure.AI.OpenAI;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.AI.OpenAI;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 using Azure;
@@ -8,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Diagnostics; // Adicionado para o Stopwatch
+using Microsoft.Bot.Builder; // Adicionado para IBotTelemetryClient
 
 namespace Microsoft.BotBuilderSamples
 {
@@ -17,27 +22,24 @@ namespace Microsoft.BotBuilderSamples
         private readonly SearchClient _searchClient;
         private readonly IConfiguration _configuration;
         private readonly ILogger<RAGService> _logger;
+        private readonly IBotTelemetryClient _telemetryClient; // Adicionado para telemetria
 
-        public RAGService(IConfiguration configuration, ILogger<RAGService> logger)
+        // Injetando o IBotTelemetryClient para registrar os tempos
+        public RAGService(IConfiguration configuration, ILogger<RAGService> logger, IBotTelemetryClient telemetryClient)
         {
             _configuration = configuration;
             _logger = logger;
+            _telemetryClient = telemetryClient; // Armazenando a referência
 
             try
             {
-                // Configurar Azure OpenAI
                 var openAiEndpoint = configuration["AzureOpenAi:Endpoint"];
                 var openAiKey = configuration["AzureOpenAi:ApiKey"];
-
-                _logger.LogInformation("Configurando Azure OpenAI: {Endpoint}", openAiEndpoint);
                 _openAiClient = new OpenAIClient(new Uri(openAiEndpoint), new AzureKeyCredential(openAiKey));
 
-                // Configurar Azure AI Search
                 var searchEndpoint = configuration["AzureAiSearch:Endpoint"];
                 var searchKey = configuration["AzureAiSearch:ApiKey"];
                 var indexName = configuration["AzureAiSearch:IndexName"];
-
-                _logger.LogInformation("Configurando Azure AI Search: {Endpoint}, Index: {IndexName}", searchEndpoint, indexName);
                 _searchClient = new SearchClient(new Uri(searchEndpoint), indexName, new AzureKeyCredential(searchKey));
             }
             catch (Exception ex)
@@ -49,31 +51,31 @@ namespace Microsoft.BotBuilderSamples
 
         public async Task<string> GetAnswerAsync(string question)
         {
-            if (string.IsNullOrWhiteSpace(question))
-            {
-                return "Por favor, faça uma pergunta válida.";
-            }
+            if (string.IsNullOrWhiteSpace(question)) return "Por favor, faça uma pergunta válida.";
 
             try
             {
-                _logger.LogInformation("Processando pergunta: {Question}", question);
+                var stopwatch = new Stopwatch();
 
                 // Passo 1: Gerar embedding da pergunta
+                stopwatch.Start();
                 var questionEmbedding = await GenerateEmbeddingAsync(question);
-                if (questionEmbedding == null)
-                {
-                    return "Não foi possível processar sua pergunta no momento.";
-                }
+                stopwatch.Stop();
+                _telemetryClient.TrackEvent("RAG - Gerar Embedding", metrics: new Dictionary<string, double> { { "Duration", stopwatch.ElapsedMilliseconds } });
+                if (questionEmbedding == null) return "Não foi possível processar sua pergunta no momento.";
 
                 // Passo 2: Buscar documentos relevantes
+                stopwatch.Restart();
                 var relevantDocs = await SearchRelevantDocumentsAsync(question, questionEmbedding);
-                if (!relevantDocs.Any())
-                {
-                    return "Não encontrei informação relevante sobre sua pergunta em nossa base de conhecimento.";
-                }
+                stopwatch.Stop();
+                _telemetryClient.TrackEvent("RAG - Buscar Documentos", metrics: new Dictionary<string, double> { { "Duration", stopwatch.ElapsedMilliseconds } });
+                if (!relevantDocs.Any()) return "Não encontrei informação relevante sobre sua pergunta em nossa base de conhecimento.";
 
                 // Passo 3: Gerar resposta usando contexto
+                stopwatch.Restart();
                 var answer = await GenerateAnswerAsync(question, relevantDocs);
+                stopwatch.Stop();
+                _telemetryClient.TrackEvent("RAG - Gerar Resposta Final", metrics: new Dictionary<string, double> { { "Duration", stopwatch.ElapsedMilliseconds } });
 
                 _logger.LogInformation("Resposta gerada com sucesso para: {Question}", question);
                 return answer;
@@ -84,7 +86,7 @@ namespace Microsoft.BotBuilderSamples
                 return "Desculpe, ocorreu um erro ao processar sua pergunta. Tente novamente em alguns instantes.";
             }
         }
-
+        
         private async Task<float[]> GenerateEmbeddingAsync(string text)
         {
             try
@@ -156,7 +158,6 @@ namespace Microsoft.BotBuilderSamples
                 }
 
                 var chatDeployment = _configuration["AzureOpenAi:ChatDeploymentName"];
-
                 var systemPrompt = @"Você é um ASSISTENTE DE SUPORTE TÉCNICO especializado e altamente qualificado. Sua função é fornecer suporte técnico preciso e profissional.
 
 ## REGRAS FUNDAMENTAIS:
@@ -207,18 +208,17 @@ Se a situação requer atenção humana, indique:
                 {
                     DeploymentName = chatDeployment,
                     Messages =
-            {
-                new ChatRequestSystemMessage(systemPrompt),
-                new ChatRequestUserMessage(question)
-            },
-                    MaxTokens = 800, // Aumentado para respostas mais detalhadas
-                    Temperature = 0.2f // Bem baixa para consistência
+                    {
+                        new ChatRequestSystemMessage(systemPrompt),
+                        new ChatRequestUserMessage(question)
+                    },
+                    MaxTokens = 800,
+                    Temperature = 0.2f
                 };
 
                 var response = await _openAiClient.GetChatCompletionsAsync(chatOptions);
                 var answer = response.Value.Choices[0].Message.Content;
-
-                // Log das fontes utilizadas para rastreabilidade
+                
                 var sources = relevantDocs.Select(doc => doc.ContainsKey("source") ? doc["source"].ToString() : "Unknown").Distinct();
                 _logger.LogInformation("Resposta gerada usando {DocumentCount} documentos. Sources: {Sources}",
                     relevantDocs.Count, string.Join(", ", sources));
