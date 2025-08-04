@@ -1,13 +1,17 @@
-﻿// Startup.cs
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.ApplicationInsights;
+using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
+using Microsoft.BotBuilderSamples.Bots;
+using Microsoft.BotBuilderSamples.Dialogs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.BotBuilderSamples.Bots;
-using Microsoft.BotBuilderSamples.Services;
 
 namespace Microsoft.BotBuilderSamples
 {
@@ -22,22 +26,24 @@ namespace Microsoft.BotBuilderSamples
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpClient().AddControllers().AddNewtonsoftJson();
+            services.AddHttpClient().AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.MaxDepth = HttpHelper.BotMessageSerializerSettings.MaxDepth;
+            });
 
-            // Bot Framework
             services.AddSingleton<IBotFrameworkHttpAdapter, AdapterWithErrorHandler>();
-            services.AddSingleton<IStorage, MemoryStorage>();
-            services.AddSingleton<ConversationState>();
-            services.AddSingleton<UserState>();
+            
             services.AddApplicationInsightsTelemetry();
+            
             services.AddSingleton<IBotTelemetryClient, BotTelemetryClient>();
-
-            // MCP e RAG Services
-            services.AddSingleton<McpClient>();        
-            services.AddSingleton<RAGService>();
-
-            // Bot
-            services.AddTransient<IBot, EchoBot>();
+            
+            // Registra os diálogos que você criou
+            services.AddSingleton<DateResolverDialog>();
+            services.AddSingleton<FlightBookingDialog>();
+            services.AddSingleton<RootDialog>();
+            
+            // O bot principal que roda os diálogos
+            services.AddTransient<IBot, DialogBot<RootDialog>>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -46,8 +52,10 @@ namespace Microsoft.BotBuilderSamples
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseDefaultFiles()
                 .UseStaticFiles()
+                .UseWebSockets()
                 .UseRouting()
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
