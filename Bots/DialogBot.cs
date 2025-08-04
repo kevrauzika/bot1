@@ -10,14 +10,15 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
-    // T representa o tipo do seu diálogo principal.
     public class DialogBot<T> : ActivityHandler where T : Dialog
     {
         protected readonly Dialog Dialog;
         protected readonly ILogger Logger;
+        protected readonly ConversationState ConversationState;
 
-        public DialogBot(T dialog, ILogger<DialogBot<T>> logger)
+        public DialogBot(ConversationState conversationState, T dialog, ILogger<DialogBot<T>> logger)
         {
+            ConversationState = conversationState;
             Dialog = dialog;
             Logger = logger;
         }
@@ -25,14 +26,17 @@ namespace Microsoft.BotBuilderSamples.Bots
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default(CancellationToken))
         {
             await base.OnTurnAsync(turnContext, cancellationToken);
+
+            // Salva quaisquer alterações no estado da conversa no final do turno.
+            await ConversationState.SaveChangesAsync(turnContext, false, cancellationToken);
         }
 
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
             Logger.LogInformation("Running dialog with Message Activity.");
-            
-            // Executa o Dialog.
-            await Dialog.RunAsync(turnContext, turnContext.TurnState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken);
+
+            // Executa o Dialog com o acessador de estado correto.
+            await Dialog.RunAsync(turnContext, ConversationState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken);
         }
     }
 }

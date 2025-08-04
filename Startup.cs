@@ -34,9 +34,13 @@ namespace Microsoft.BotBuilderSamples
             services.AddSingleton<IBotFrameworkHttpAdapter, AdapterWithErrorHandler>();
             
             services.AddApplicationInsightsTelemetry();
-            
             services.AddSingleton<IBotTelemetryClient, BotTelemetryClient>();
             
+            // Adicionando armazenamento em memória para o estado da conversa e do usuário.
+            services.AddSingleton<IStorage, MemoryStorage>();
+            services.AddSingleton<ConversationState>();
+            services.AddSingleton<UserState>();
+
             // Registra os diálogos que você criou
             services.AddSingleton<DateResolverDialog>();
             services.AddSingleton<FlightBookingDialog>();

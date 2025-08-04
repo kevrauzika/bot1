@@ -47,17 +47,14 @@ namespace Microsoft.BotBuilderSamples
                 return await stepContext.PromptAsync(nameof(DateTimePrompt), options, cancellationToken);
             }
             
-            // Se um timex foi passado, tentamos resolvê-lo.
-            var results = TimexResolver.Resolve(new[] { timex });
-            if (results.Values.Count > 0 && TimexResolver.IsDefinite(timex))
+            var isDefinite = new TimexProperty(timex).Types.Contains(Constants.TimexTypes.Definite);
+            if (isDefinite)
             {
-                // Se for uma data definitiva, podemos prosseguir.
-                var resolution = new List<DateTimeResolution> { new DateTimeResolution { Timex = timex, Value = results.Values[0].Value } };
+                var resolution = new List<DateTimeResolution> { new DateTimeResolution { Timex = timex, Value = "not supported" } };
                 return await stepContext.NextAsync(resolution, cancellationToken);
             }
             else
             {
-                // Caso contrário, pedimos novamente ao usuário.
                 return await stepContext.PromptAsync(nameof(DateTimePrompt), options, cancellationToken);
             }
         }
@@ -72,8 +69,10 @@ namespace Microsoft.BotBuilderSamples
         {
             if (promptContext.Recognized.Succeeded)
             {
+                // Checa se o TIMEX reconhecido é uma data definitiva.
                 var timex = promptContext.Recognized.Value[0].Timex;
-                return Task.FromResult(TimexResolver.IsDefinite(timex));
+                var isDefinite = new TimexProperty(timex).Types.Contains(Constants.TimexTypes.Definite);
+                return Task.FromResult(isDefinite);
             }
 
             return Task.FromResult(false);
