@@ -205,7 +205,7 @@ Se a situação requer atenção humana, indique:
                         new ChatRequestSystemMessage(systemPrompt),
                         new ChatRequestUserMessage(question)
                     },
-                    MaxTokens = 500,
+                    MaxTokens = 1200,
                     Temperature = 0.1f
                 };
 
