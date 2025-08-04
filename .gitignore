@@ -1,3 +1,6 @@
 .vs/
 .venv/
 vs/
+.DeploymentTemplates/
+.wwwroot/
+.obj/
