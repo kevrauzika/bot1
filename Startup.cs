@@ -29,9 +29,11 @@ namespace Microsoft.BotBuilderSamples
             services.AddSingleton<IStorage, MemoryStorage>();
             services.AddSingleton<ConversationState>();
             services.AddSingleton<UserState>();
+            services.AddApplicationInsightsTelemetry();
+            services.AddSingleton<IBotTelemetryClient, BotTelemetryClient>();
 
             // MCP e RAG Services
-            services.AddSingleton<McpClient>();        // ← NOVA LINHA
+            services.AddSingleton<McpClient>();        
             services.AddSingleton<RAGService>();
 
             // Bot
@@ -44,7 +46,6 @@ namespace Microsoft.BotBuilderSamples
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseDefaultFiles()
                 .UseStaticFiles()
                 .UseRouting()
