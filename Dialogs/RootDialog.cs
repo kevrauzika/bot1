@@ -8,7 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Collections.Generic;
-// Removido: using Microsoft.ApplicationInsights.DataContracts;
+// Remova a referência ao KnowledgeBaseService se houver e adicione esta:
+// (Seu RAGService já está no namespace correto, então talvez não precise do using)
 
 namespace Microsoft.BotBuilderSamples.Dialogs
 {
@@ -16,42 +17,59 @@ namespace Microsoft.BotBuilderSamples.Dialogs
     {
         private readonly FlightBookingDialog _flightBookingDialog;
         private readonly IBotTelemetryClient _telemetryClient;
+        private readonly ILogger _logger;
+        private readonly RAGService _ragService; // Alterado para RAGService
 
-        public RootDialog(ILogger<RootDialog> logger, FlightBookingDialog flightBookingDialog, IBotTelemetryClient telemetryClient)
+        // Injeta o RAGService em vez do KnowledgeBaseService
+        public RootDialog(ILogger<RootDialog> logger, FlightBookingDialog flightBookingDialog, IBotTelemetryClient telemetryClient, RAGService ragService)
             : base(nameof(RootDialog))
         {
             _flightBookingDialog = flightBookingDialog;
             _telemetryClient = telemetryClient;
+            _logger = logger;
+            _ragService = ragService; // Alterado para RAGService
 
             AddDialog(new TextPrompt(nameof(TextPrompt)));
             AddDialog(_flightBookingDialog);
 
             var waterfallSteps = new WaterfallStep[]
             {
-                InitialStepAsync,
+                DispatchStepAsync,
             };
 
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), waterfallSteps));
             InitialDialogId = nameof(WaterfallDialog);
         }
 
-        private async Task<DialogTurnResult> InitialStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> DispatchStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var stopwatch = new Stopwatch();
-            var properties = new Dictionary<string, string> { { "UserId", stepContext.Context.Activity.From.Id }, { "DialogId", Id } };
+            var userInput = stepContext.Context.Activity.Text.ToLowerInvariant();
 
-            // Corrigido para usar Severity.Information do Microsoft.Bot.Builder
-            _telemetryClient.TrackTrace("Iniciando reconhecimento do LUIS/Orchestrator", Severity.Information, properties);
-            stopwatch.Start();
-            
-            var dialogResult = await stepContext.BeginDialogAsync(nameof(FlightBookingDialog), new BookingDetails(), cancellationToken);
-            
-            stopwatch.Stop();
-            
-            var metrics = new Dictionary<string, double> { { "Duration", stopwatch.ElapsedMilliseconds } };
-            _telemetryClient.TrackEvent("TempoPesquisaPergunta(LUIS)", properties, metrics);
-            
-            return await stepContext.EndDialogAsync(null, cancellationToken);
+            // Lógica para desviar para o diálogo de voos (exemplo)
+            if (userInput.Contains("book flight") || userInput.Contains("travel") || userInput.Contains("reservar voo"))
+            {
+                _logger.LogInformation("Intenção 'BookFlight' detectada. Iniciando FlightBookingDialog.");
+                return await stepContext.BeginDialogAsync(nameof(FlightBookingDialog), new BookingDetails(), cancellationToken);
+            }
+            else
+            {
+                // Para todas as outras perguntas, usamos o SEU RAGService
+                _logger.LogInformation("Nenhuma intenção conhecida detectada. Chamando RAGService.");
+                
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
+
+                // Chama o método GetAnswerAsync do seu RAGService
+                var response = await _ragService.GetAnswerAsync(stepContext.Context.Activity.Text);
+                
+                stopwatch.Stop();
+                var metrics = new Dictionary<string, double> { { "Duration", stopwatch.ElapsedMilliseconds } };
+                _telemetryClient.TrackEvent("TempoBuscaRAG", properties: null, metrics: metrics);
+
+                await stepContext.Context.SendActivityAsync(MessageFactory.Text(response), cancellationToken);
+                
+                return await stepContext.EndDialogAsync(null, cancellationToken);
+            }
         }
     }
 }

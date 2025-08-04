@@ -40,6 +40,7 @@ namespace Microsoft.BotBuilderSamples
             services.AddSingleton<IStorage, MemoryStorage>();
             services.AddSingleton<ConversationState>();
             services.AddSingleton<UserState>();
+            services.AddSingleton<RAGService>();
 
             // Registra os diálogos que você criou
             services.AddSingleton<DateResolverDialog>();
