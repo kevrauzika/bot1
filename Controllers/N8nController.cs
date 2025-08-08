@@ -1,78 +1,46 @@
 // Nome do arquivo: Controllers/N8nController.cs
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Bot.Builder;
-using Microsoft.Bot.Builder.Integration.AspNet.Core;
-using Microsoft.Bot.Schema;
-using Newtonsoft.Json.Linq;
-using System.IO;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.BotBuilderSamples.Controllers
 {
+    // Criamos uma classe simples para representar o JSON que o n8n envia.
+    public class N8nRequestPayload
+    {
+        public string Question { get; set; }
+    }
+
     [Route("api/n8n")]
     [ApiController]
     public class N8nController : ControllerBase
     {
-        private readonly IBotFrameworkHttpAdapter _adapter;
-        private readonly IBot _bot;
-
-        public N8nController(IBotFrameworkHttpAdapter adapter, IBot bot)
+        // Para este endpoint simples, não precisamos mais do IBot ou do Adapter.
+        public N8nController()
         {
-            _adapter = adapter;
-            _bot = bot;
         }
 
         [HttpPost("ask")]
-        public async Task PostAsync()
+        // O [FromBody] diz ao ASP.NET Core para ler o corpo do JSON
+        // e convertê-lo automaticamente para o nosso objeto N8nRequestPayload.
+        public IActionResult PostAsync([FromBody] N8nRequestPayload payload)
         {
-            // 1. Ler o corpo da requisição que o n8n enviou
-            string requestBody;
-            using (var reader = new StreamReader(Request.Body, Encoding.UTF8))
+            if (payload == null || string.IsNullOrEmpty(payload.Question))
             {
-                requestBody = await reader.ReadToEndAsync();
+                // Se o JSON estiver mal formatado ou a pergunta estiver vazia, retorna um erro.
+                return BadRequest("O corpo da requisição precisa conter um campo 'Question'.");
             }
 
-            // 2. Extrair a pergunta do JSON
-            var jsonBody = JObject.Parse(requestBody);
-            var question = jsonBody["question"]?.ToString();
+            // A lógica do bot (Echo) é replicada aqui de forma simples para o teste.
+            var responseText = $"Echo from Azure: {payload.Question}";
 
-            if (string.IsNullOrEmpty(question))
-            {
-                // Se a chave "question" não estiver no JSON, retorna um erro claro.
-                Response.StatusCode = 400; // Bad Request
-                await Response.Body.WriteAsync(Encoding.UTF8.GetBytes("O corpo da requisição precisa conter um campo 'question'."));
-                return;
-            }
-
-            // 3. Criar uma Atividade de Mensagem a partir da pergunta
-            var activity = new Activity
-            {
-                Type = ActivityTypes.Message,
-                Text = question,
-                ChannelId = "n8n-channel",
-                From = new ChannelAccount { Id = "n8n-user" },
-                Recipient = new ChannelAccount { Id = "bot" },
-                ServiceUrl = "urn:n8n" // Um valor fictício, mas necessário
+            // Criamos um objeto de resposta.
+            var response = new {
+                answer = responseText
             };
 
-            // 4. Processar a atividade manualmente e obter a resposta
-            // Usamos um "TurnContext" e o método "OnTurnAsync" do bot.
-            await ((BotAdapter)_adapter).ContinueConversationAsync(
-                "appId-ficticio", // App ID, pode ser qualquer valor aqui
-                activity,
-                async (turnContext, cancellationToken) =>
-                {
-                    // Executa a lógica principal do bot (o seu EchoBot)
-                    await _bot.OnTurnAsync(turnContext, cancellationToken);
-
-                    // A resposta do bot estará em turnContext.TurnState.
-                    // Aqui, nós apenas deixamos o bot enviar a resposta.
-                    // O BotAdapter vai capturar e enviar como a resposta HTTP.
-
-                }, default(CancellationToken));
+            // Retornamos a resposta como um JSON com status 200 OK.
+            return Ok(response);
         }
     }
 }
