@@ -11,27 +11,24 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.BotBuilderSamples.Controllers
 {
-    // Define a rota para este controller. As chamadas serão feitas para /api/n8n
     [Route("api/n8n")]
     [ApiController]
     public class N8nController : ControllerBase
     {
-        private readonly IBotFrameworkHttpAdapter _adapter;
+        // Use a classe concreta 'BotFrameworkHttpAdapter' em vez da interface 'IBotFrameworkHttpAdapter'
+        private readonly BotFrameworkHttpAdapter _adapter; // <-- ALTERAÇÃO AQUI
         private readonly IBot _bot;
 
-        // O construtor recebe o "adaptador" e a implementação do "bot" via injeção de dependência.
-        // O ASP.NET Core cuida disso para nós.
-        public N8nController(IBotFrameworkHttpAdapter adapter, IBot bot)
+        // O construtor agora pede a classe concreta.
+        public N8nController(BotFrameworkHttpAdapter adapter, IBot bot) // <-- ALTERAÇÃO AQUI
         {
             _adapter = adapter;
             _bot = bot;
         }
 
-        // Define a rota para o método POST. Ele será acionado por POST /api/n8n/ask
         [HttpPost("ask")]
         public async Task PostAsync()
         {
-            // Lê o corpo da requisição que o n8n enviou
             using (var reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
                 var requestBody = await reader.ReadToEndAsync();
@@ -40,17 +37,18 @@ namespace Microsoft.BotBuilderSamples.Controllers
                 var jsonBody = JObject.Parse(requestBody);
                 var question = jsonBody["question"]?.ToString();
 
-                if (string.IsNullOrEmpty(question))
+                // Simula uma atividade de mensagem para o bot
+                var activity = new Microsoft.Bot.Schema.Activity
                 {
-                    // Se nenhuma pergunta foi enviada, retorna um erro.
-                    Response.StatusCode = 400;
-                    await Response.Body.WriteAsync(Encoding.UTF8.GetBytes("O campo 'question' é obrigatório."));
-                    return;
-                }
-
-                // O truque está aqui: Usamos o método ProcessActivityAsync do adaptador para
-                // simular uma "conversa" com o bot, passando a pergunta como a mensagem.
-                // O resultado será o que o bot teria respondido.
+                    Type = Microsoft.Bot.Schema.ActivityTypes.Message,
+                    From = new Microsoft.Bot.Schema.ChannelAccount { Id = "n8n-user" },
+                    Recipient = new Microsoft.Bot.Schema.ChannelAccount { Id = "bot" },
+                    ServiceUrl = "https://smba.trafficmanager.net/amer/", // URL de serviço padrão
+                    ChannelId = "emulator", // Simula ser do emulador
+                    Text = question
+                };
+                
+                // Usa a nova atividade para processar
                 await _adapter.ProcessActivityAsync(Request, Response, _bot, default(CancellationToken));
             }
         }
